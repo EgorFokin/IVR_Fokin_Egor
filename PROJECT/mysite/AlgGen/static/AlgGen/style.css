@@ -1,0 +1,156 @@
+body{
+	font-family: 'Montserrat', sans-serif;
+	font-size: 16px;
+	line-height: 1.2;
+	color: #333;
+	margin: 0;
+}
+
+input {
+	font-family: 'Montserrat', sans-serif;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.2;
+	color: #333;
+	max-width: 100px;
+	border-radius: 5px;
+}
+*,
+*:before,
+*:after{
+	box-sizing: border-box;
+}
+
+h1,h2,h3,h4,h5,h6 {
+	margin: 0;
+}
+
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+button{
+	background-color: white;
+	border-radius: 5px;
+	font-family: 'Montserrat', sans-serif;
+	font-size: 16px;
+	line-height: 1.2;
+	color: #333;
+}
+
+.container{
+	width: 100%;
+	background: none;
+	display: flex;
+	margin: 0 auto;
+}
+
+.left-sidebar{
+	position: relative;
+	width: 330px;
+}
+
+#content{
+	width: calc(100% - 330px);
+	min-height: calc(100vh - 60px);
+	max-width: 950px;
+	float: right;
+	border-left: 1px solid #cecece;
+	padding: 24px;
+}
+
+.problemHeader {
+	font-size: 18px;
+	font-weight: 700;
+	max-width: 400px;
+	margin: 30px 0 8px 0;
+}
+
+.sectionsHeader{
+	font-size: 16px;
+	font-weight: 400;
+	float: right;
+	margin: 54px 60px 0 150px;
+}
+
+.sections{
+	line-height: 1;
+	font-size: 14px;
+	float: right;
+	max-width: 150px;
+	margin-top: 0;
+}
+.section{
+	list-style-type: none;
+	margin: 1em 0 1em 0;
+}
+
+.problems{
+	font-size: 20px;
+}
+
+.site-header {
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: #ffd300;
+  height: 60px;
+}
+
+.site-header::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.site-identity {
+  float: left;
+}
+
+.site-identity img {
+  max-width: 40px;
+  float: left;
+  margin: 10px 10px 0 20px;
+}
+
+.site-navigation {
+  float: left;
+  margin: 0 0 0 50px;
+}
+
+.site-navigation ul, li {
+  margin: 0;
+  padding: 0;
+}
+
+.site-navigation li {
+  display: inline-block;
+  margin: 1.4em 1em 1em 1em;
+  font-weight: 700;
+}
+.border-right{
+	border-right: 1px solid black;
+	padding-right: 35px;
+}
+
+
+.site-profile{
+	float: right;
+}
+
+
+.site-profile img {
+  max-width: 40px;
+  float: right;
+  margin: 10px 10px 0 20px;
+}
+
+.profile-name{
+	display: inline-block;
+	margin: 1.4em 0 1em 1em;
+	font-weight: 700;
+}
