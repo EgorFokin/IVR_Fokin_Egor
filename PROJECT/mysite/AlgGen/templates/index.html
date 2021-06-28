@@ -6,11 +6,11 @@
     <link rel="stylesheet" type="text/css" href="{% static 'AlgGen/style.css' %}">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="{% static 'AlgGen/images/favicon.ico' %}"/>
     <script>
-MathJax = {
-  loader: {load: ['input/asciimath', 'output/chtml']}
-}
-
+        MathJax = {
+          loader: {load: ['input/asciimath', 'output/chtml']}
+        }
     </script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script type="text/javascript" id="MathJax-script" async
@@ -25,7 +25,7 @@ MathJax = {
     </div>
     <nav class="site-navigation">
         <ul class="nav">
-            <li class=border-right><a href="#">Практика</a></li>
+            <li class=border-right><a href="{%url 'index'%}">Практика</a></li>
             <li><a href="#">Курсы</a></li>
         </ul>
     </nav>
@@ -38,25 +38,26 @@ MathJax = {
     <div class="left-sidebar">
         <h2 class="sectionsHeader">Разделы</h2>
         <ul class=sections>
-            <li class="section"><a href="#">Арифметика</a></li>
-            <li class="section"><a href="#">Линейные уравнения</a></li>
-            <li class="section"><a href="#">Квадратный трехчлен</a></a></li>
-            <li class="section"><a href="#">Системы</a></li>
-            <li class="section"><a href="#">Замена переменной</a></li>
-            <li class="section"><a href="#">Производная</a></li>
-            <li class="section"><a href="#">Неравенства</a></li>
+            <li class="section" {%if problem_type == "arithmetic"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=arithmetic">Арифметика</a></li>
+            <li class="section" {%if problem_type == "linear"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=linear">Линейные уравнения</a></li>
+            <li class="section" {%if problem_type == "quadratic"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=quadratic">Квадратный трехчлен</a></li>
+            <li class="section" {%if problem_type == "system"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=system">Системы</a></li>
+            <li class="section" {%if problem_type == "replacement"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=replacement">Замена переменной</a></li>
+            <li class="section" {%if problem_type == "derivative"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=derivative">Производная</a></li>
+            <li class="section" {%if problem_type == "inequality"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=inequality">Неравенства</a></li>
         </ul>
     </div>
     <div id="content" class="site-content">
-        <h1 class="problemHeader">Вычислите и впишите правильный ответ в поле</h1>
+        <h1 class="problemHeader">Вычислите и впишите правильный ответ в поле.
+            {%if problem_type == "quadratic" or problem_type == "system" or problem_type == "replacement"%} Значения x указать в порядке возрастания.{%endif%}
+            {%if problem_type == "inequality"%} Ответ должен быть вида "ЛеваяГраница ПраваяГраница".{%endif%}
+            {%if problem_type == "derivative"%} Ответом является значение производной при x равном данному значению.{%endif%}</h1>
         <ol class=problems>
-            <li class="problem"><p>`sqrt(36)=`</p><input type="text"></li>
-            <li class="problem"><p>`2^5=`</p><input type="text"></li>
-            <li class="problem"><p>`221/17=`</p><input type="text"></li>
-            <li class="problem"><p>`log(512)=`</p><input type="text"></li>
-            <li class="problem"><p>`2+2=`</p><input type="text"></li>
+            {% for problem in problems %}
+            <li class="problem"><p>{{problem.0}}</p><input type="text"></li>
+            {% endfor %}
         </ol>
-        <button type="button">Проверить</button>
+        <button type="button" onClick="check_answer()">Проверить</button>
         <button type="button" onClick="window.location.reload()">Обновить</button>
 
     </div>
@@ -64,3 +65,22 @@ MathJax = {
 
 </body>
 </html>
+
+<script>
+
+    function check_answer(){
+        var problems = document.getElementsByClassName("problem");
+        var i = 0;
+        {% for problem in problems %}
+            var answer = problems[i].getElementsByTagName("input")[0];
+            if (answer.value == '{{problem.1}}'){
+                answer.style.background = "#ecf9dd";
+            }
+            else{
+                answer.style.background = "#f7c9c9";
+            }
+            i+=1;
+        {% endfor %}
+    }
+
+</script>

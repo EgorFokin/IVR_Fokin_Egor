@@ -61,6 +61,11 @@ button{
 	padding: 24px;
 }
 
+#selected_section{
+    font-weight: 700;
+    pointer-events: none;
+}
+
 .problemHeader {
 	font-size: 18px;
 	font-weight: 700;
