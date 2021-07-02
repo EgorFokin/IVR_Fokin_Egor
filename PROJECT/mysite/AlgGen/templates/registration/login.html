@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+
+{%block body%}
+<div id="registrationContainer">
+    <div id="registration">
+        <div id="login_logo">
+        <img src="{% static 'AlgGen/images/logo.png' %}" alt="AlgGen"/>
+            </div>
+        <div id="formContainer">
+            <form id="register-form" action="" method="POST">
+                {% if errors %}
+                  <div id = "register_error_message">
+                      <p>{{errors}}</p>
+                  </div>
+                {% endif %}
+                {% csrf_token %}
+                <div class="auth_item">
+                <label>логин</label>
+                    <div class="auth_input_box">
+                        <input type="text" name="username" id="id_username">
+                    </div>
+                </div>
+                <div class="auth_item">
+                <label>пароль</label>
+                    <div class="auth_input_box">
+                        <input type="password" name="password" id="id_password1">
+                    </div>
+                </div>
+                <div class="auth_item">
+                <input id ="auth_button" type="submit" value="Логин">
+                </div>
+            </form>
+        </div>
+        <div id="auth_suggestion">
+            Нет аккаунта?
+            <a href="{% url 'register' %}"> Зарегистрироваться</a>
+        </div>
+    </div>
+</div>
+{%endblock%}

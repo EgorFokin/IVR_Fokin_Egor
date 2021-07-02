@@ -1,0 +1,2 @@
+[config]
+email_bot_password = -LDdX4X6P>3E'Mr4

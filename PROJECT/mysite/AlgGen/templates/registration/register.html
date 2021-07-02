@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+
+{%block body%}
+<div id="registrationContainer">
+    <div id="registration">
+        <div id="login_logo">
+        <img src="{% static 'AlgGen/images/logo.png' %}" alt="AlgGen"/>
+            </div>
+        <div id="formContainer">
+            <form id="register-form" action="" method="POST">
+                {% if form.errors %}
+                  <div id = "register_error_message">
+                      <p>{% firstof form.errors.username.0 form.errors.email.0 form.errors.password1.0 form.errors.password2.0 %}</p>
+                  </div>
+                {% endif %}
+                {% csrf_token %}
+                <div class="auth_item">
+                <label>логин</label>
+                    <div class="auth_input_box">
+                {{form.username}}
+                    </div>
+                    </div>
+                <div class="auth_item">
+                <label>почта</label>
+                    <div class="auth_input_box">
+                {{form.email}}
+                        </div>
+                </div>
+                <div class="auth_item">
+                <label>имя</label>
+                    <div class="auth_input_box">
+                {{form.first_name}}
+                    </div>
+                </div>
+                <div class="auth_item">
+                <label>пароль</label>
+                    <div class="auth_input_box">
+                {{form.password1}}
+                    </div>
+                </div>
+                <div class="auth_item">
+                <label>повторите пароль</label>
+                    <div class="auth_input_box">
+                {{form.password2}}
+                    </div>
+                </div>
+                <div class="auth_item">
+                <input id ="auth_button" type="submit" value="Зарегистрироваться">
+                </div>
+            </form>
+        </div>
+        <div id="auth_suggestion">
+            Уже есть аккаунт?
+            <a href="{% url 'login' %}"> Войти</a>
+        </div>
+    </div>
+</div>
+{%endblock%}

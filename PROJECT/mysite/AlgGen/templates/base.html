@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'AlgGen/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="{% static 'AlgGen/images/favicon.ico' %}"/>
+    <script>
+        MathJax = {
+          loader: {load: ['input/asciimath', 'output/chtml']}
+        }
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script type="text/javascript" id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
+    </script>
+    <title>{% block title %}AlgGen{% endblock %}</title>
+</head>
+<body>
+<header class="site-header">
+    <div class="site-identity">
+        <img src="{% static 'AlgGen/images/logo.png' %}" alt="AlgGen"/>
+    </div>
+    <nav class="site-navigation">
+        <ul class="nav">
+            <li class=border-right><a href="{%url 'index'%}">Практика</a></li>
+            <li><a href="#">Курсы</a></li>
+        </ul>
+    </nav>
+    {% if user.is_authenticated %}
+        <div class="site-profile">
+            <div class="profile-name">{{user.first_name}}</div>
+            <img src="{% static 'AlgGen/images/profile-icon.jpg' %}" alt="profile"/>
+            <div id="user_menu">
+                <a href="{% url 'logout' %}">Выйти</a>
+            </div>
+        </div>
+    {% endif %}
+</header>
+{% block body %}
+{% endblock %}
+</body>
+</html>
+
+<script>
+    {% block script %}
+    {% endblock %}
+</script>

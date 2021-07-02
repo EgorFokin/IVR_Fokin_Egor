@@ -1,50 +1,17 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'AlgGen/style.css' %}">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" type="image/png" href="{% static 'AlgGen/images/favicon.ico' %}"/>
-    <script>
-        MathJax = {
-          loader: {load: ['input/asciimath', 'output/chtml']}
-        }
-    </script>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script type="text/javascript" id="MathJax-script" async
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
-    </script>
-    <title>AlgGen</title>
-</head>
-<body>
-<header class="site-header">
-    <div class="site-identity">
-        <img src="{% static 'AlgGen/images/logo.png' %}" alt="AlgGen"/>
-    </div>
-    <nav class="site-navigation">
-        <ul class="nav">
-            <li class=border-right><a href="{%url 'index'%}">Практика</a></li>
-            <li><a href="#">Курсы</a></li>
-        </ul>
-    </nav>
-    <div class="site-profile">
-        <a href="#"><img src="{% static 'AlgGen/images/profile-icon.jpg' %}" alt="profile"/></a>
-        <div class="profile-name">Егор</div>
-    </div>
-</header>
+{% extends "base.html" %}
+
+{% block body %}
 <div class="container">
     <div class="left-sidebar">
         <h2 class="sectionsHeader">Разделы</h2>
         <ul class=sections>
-            <li class="section" {%if problem_type == "arithmetic"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=arithmetic">Арифметика</a></li>
-            <li class="section" {%if problem_type == "linear"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=linear">Линейные уравнения</a></li>
-            <li class="section" {%if problem_type == "quadratic"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=quadratic">Квадратный трехчлен</a></li>
-            <li class="section" {%if problem_type == "system"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=system">Системы</a></li>
-            <li class="section" {%if problem_type == "replacement"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=replacement">Замена переменной</a></li>
-            <li class="section" {%if problem_type == "derivative"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=derivative">Производная</a></li>
-            <li class="section" {%if problem_type == "inequality"%}id="selected_section{%endif%}"><a href="{%url 'index'%}?type=inequality">Неравенства</a></li>
+            <li class="section" {%if problem_type == "arithmetic"%}id="selected-section{%endif%}"><a href="{%url 'index'%}?type=arithmetic">Арифметика</a></li>
+            <li class="section" {%if problem_type == "linear"%}id="selected-section{%endif%}"><a href="{%url 'index'%}?type=linear">Линейные уравнения</a></li>
+            <li class="section" {%if problem_type == "quadratic"%}id="selected-section{%endif%}"><a href="{%url 'index'%}?type=quadratic">Квадратный трехчлен</a></li>
+            <li class="section" {%if problem_type == "system"%}id="selected-section{%endif%}"><a href="{%url 'index'%}?type=system">Системы</a></li>
+            <li class="section" {%if problem_type == "replacement"%}id="selected-section{%endif%}"><a href="{%url 'index'%}?type=replacement">Замена переменной</a></li>
+            <li class="section" {%if problem_type == "derivative"%}id="selected-section{%endif%}"><a href="{%url 'index'%}?type=derivative">Производная</a></li>
+            <li class="section" {%if problem_type == "inequality"%}id="selected-section{%endif%}"><a href="{%url 'index'%}?type=inequality">Неравенства</a></li>
         </ul>
     </div>
     <div id="content" class="site-content">
@@ -54,7 +21,7 @@
             {%if problem_type == "derivative"%} Ответом является значение производной при x равном данному значению.{%endif%}</h1>
         <ol class=problems>
             {% for problem in problems %}
-            <li class="problem"><p>{{problem.0}}</p><input type="text"></li>
+            <li class="problem"><p>{{problem.0}}</p><input type="text" class="input-answer"></li>
             {% endfor %}
         </ol>
         <button type="button" onClick="check_answer()">Проверить</button>
@@ -62,12 +29,9 @@
 
     </div>
 </div>
+{% endblock %}
 
-</body>
-</html>
-
-<script>
-
+{% block script %}
     function check_answer(){
         var problems = document.getElementsByClassName("problem");
         var i = 0;
@@ -82,5 +46,4 @@
             i+=1;
         {% endfor %}
     }
-
-</script>
+{% endblock %}
