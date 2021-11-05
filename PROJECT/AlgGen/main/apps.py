@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class AlggenConfig(AppConfig):
+class MainConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'AlgGen'
+    name = 'main'

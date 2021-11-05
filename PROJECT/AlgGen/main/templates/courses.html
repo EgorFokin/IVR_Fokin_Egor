@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block body %}
+<div class="container">
+    <div class="left-sidebar">
+        <h2 class="sectionsHeader">Курсы</h2>
+        <ul class=sections>
+            <li class="section" id="selected-section" style="margin-right:5px;">Базовый курс</li>
+        </ul>
+    </div>
+    <div id="content" class="site-content">
+        {%if not is_course_completed and is_course_started %}
+        <h1 class="courseStep">{{course_step}}</h1>
+        <p class="courseTheory">
+            {%if course_step == "Модуль 1. Арифметика"%}К данному модулю теория отсутствует{%endif%}
+            {%if course_step == "Модуль 2. Линейные уравнения"%}Если уравнение вида `ax+b=0`, то `x=-b/a`{%endif%}
+            {%if course_step == "Модуль 3. Квадратный трехчлен"%}Квадратным трехчленом называют многочлен, вида
+            `y=ax^2+ bx + c`, где `a, b` и `c` — действительные числа, причем `a != 0`<br>
+            Число `D=b^2 - 4ac` называется дискриминантом квадратного трехчлена.<br>
+            Если `D<0`, то корней нет<br>
+            Если `D=0`, то корень один<br>
+            Если `D>0`, то корней два<br>
+            Зная дискриминант, можно найти значения корней:<br>
+            `x = (-b+-sqrt(D))/(2a)`{%endif%}
+            {%if course_step == "Модуль 4. Системы"%}
+            Чтобы решить такую систему, необходимо привести её к линейному уравнению с одной неизвестной.
+            Для этого все уравнения системы почленно умножаются на такое число, чтобы коэффициенты при одной
+            из переменных стали противоположными числами.
+            Полученное уравнение решается относительно единственной переменной, после чего ее значение подставляется
+            в одно из исходных уравнений системы, и определяется значение второй переменной.<br>
+            Например, если система уравнений: `{(3x-2y=6),(5x+4y=32):}`<br>
+            Умножим обе части первого уравнения системы на 2: `3x-2y=6 | *2`<br>
+            Получим: `{(6x-4y=12),(5x+4y=32):}`<br>
+            Сложим эти 2 уравнения, получим: `11x = 44`, значит `x = 4`, подставив в первое уравнение исходной системы,
+            получим `y = 3`
+            {%endif%}
+            {%if course_step == "Модуль 5. Замена переменной"%}Заметим, что в уравнениях такого типа слева можно найти
+            две пары таких числовых коэффициентов, что их произведения будут равны. Чтобы решить такое уравнение, нужно
+            перемножить скобки с этими коэффициентами, а также поделить обе части уравнения на `x^2`. Сделав это, можно
+            будет выполнить замену переменной, заменив одну из скобок левой части на `t`, а другую выразить через `t`.
+            Расскрыв скобки в получившемся уравнении, получим квадратное уравнение, из которого можно будет найти `t`.
+            Далее, выразив `t` через `x`, найдем `x`;
+            {%endif%}
+            {%if course_step == "Модуль 6. Производная"%}Найти производную многочлена можно, применив правило `x^n =
+            n*x^(n-1)` к каждому члену{%endif%}
+            {%if course_step == "Модуль 7. Неравенства"%}Чтобы решить неравенство `ax^2+bx+c>=0`, необходимо разложить
+            левую часть на множители.
+            Сделать это можно, найдя корни квадратного трехчлена `ax^2+bx+c=0`. Тогда получим неравенство `a(x-x1)(x-x2)
+            >=0`.
+            Отсюда, границами будут являтся x1 и x2{%endif%}
+
+        </p>
+        <h2 class="problemHeader">Вычислите и впишите правильный ответ в поле.
+            {%if course_step == "Модуль 3. Квадратный трехчлен" or course_step == "Модуль 4. Системы"%} Значения x
+            указать в порядке возрастания.{%endif%}
+            {%if course_step == "Модуль 5. Замена переменной"%}Напишите только целые ответы в порядке
+            возрастания.{%endif%}
+            {%if course_step == "Модуль 7. Неравенства"%} Ответ должен быть вида "ЛеваяГраница ПраваяГраница".{%endif%}
+            {%if course_step == "Модуль 6. Производная"%} Ответом является значение производной при x равном данному
+            значению.{%endif%}</h2>
+        <ol class=problems>
+            {% for problem in problems %}
+            <li class="problem">
+                {{problem.1}}<input type="text" {%if problem.0 in solved_problems %} value = {{problem.2}} style = "background: #ecf9dd"
+                                    {%elif problem.0 in unsolved_problems %}style = "background: #f7c9c9"{%endif%} class="input-answer">
+                <input value="Показать решение" class="show_solution"
+                       onclick="document.getElementsByClassName('solution')[{{problem.0}}].style.display = 'flex'">
+                <div class="solution">
+                    <div class="solution_text">{{problem.3}}</div>
+                    <button class="exit_button"
+                            onClick="document.getElementsByClassName('solution')[{{problem.0}}].style.display = 'none'">
+                        X
+                    </button>
+                </div>
+            </li>
+            {% endfor %}
+        </ol>
+        <p id="congratulations_text">Все Верно!</p>
+        <div><a style="color:#0077cc" {%if course_step == "Модуль 1. Арифметика"%}href="{%url 'index'%}?type=arithmetic"{%endif%}
+            {%if course_step == "Модуль 2. Линейные уравнения"%}href="{%url 'index'%}?type=linear"{%endif%}
+            {%if course_step == "Модуль 3. Квадратный трехчлен"%}href="{%url 'index'%}?type=quadratic"{%endif%}
+            {%if course_step == "Модуль 4. Системы"%}href="{%url 'index'%}?type=system"{%endif%}
+            {%if course_step == "Модуль 5. Замена переменной"%}href="{%url 'index'%}?type=replacement"{%endif%}
+            {%if course_step == "Модуль 6. Производная"%}href="{%url 'index'%}?type=derivative"{%endif%}
+            {%if course_step == "Модуль 7. Неравенства"%}href="{%url 'index'%}?type=inequality"{%endif%}>Больше
+            задач</a> </div>
+        <div>
+            <form id = "check_answer" action="" method="post">{% csrf_token %}
+                <button type="submit">Проверить</button>
+            </form>
+        </div>
+        <div>
+            <form action="" method="post">{% csrf_token %}
+                <input class="navigation_button" type="submit" value="Предыдущий модуль" name="previous_module">
+                <input class="navigation_button" type="submit" value="Следующий модуль" name="next_module">
+            </form>
+        </div>
+        {%elif is_course_completed%}
+        <h1 class="courseStep">Курс завершен!</h1>
+        <p class="courseTheory">Статистика:<br><br>
+            Пройденные темы:<br>
+            Арифметика: {{solved_problems_stats.0}}/3 (решают в среднем: {{average_solved.0}})<br>
+            Линейные уравнения: {{solved_problems_stats.1}}/3 (решают в среднем: {{average_solved.1}})<br>
+            Квадратный трехчлен: {{solved_problems_stats.2}}/3 (решают в среднем: {{average_solved.2}})<br>
+            Системы: {{solved_problems_stats.3}}/3 (решают в среднем: {{average_solved.3}})<br>
+            Замена переменной: {{solved_problems_stats.4}}/3 (решают в среднем: {{average_solved.4}})<br>
+            Производная: {{solved_problems_stats.5}}/3 (решают в среднем: {{average_solved.5}})<br>
+            Неравенства: {{solved_problems_stats.6}}/3 (решают в среднем: {{average_solved.6}})<br><br>
+            Время затрачено: {{time_spent}}<br><br>
+        </p>
+        <div>
+            <form action="" method="post">{% csrf_token %}
+                <input class="navigation_button" type="submit" value="Начать заново" name="start_course">
+            </form>
+        </div>
+        <form action="" method="post">{% csrf_token %}
+            <p>Написать оценку курсу(её увидит автор):</p>
+            <p><textarea id="review" name="review_text"></textarea></p>
+            <p><input class="navigation_button" type="submit" value="Отправить" name="review"></p>
+        </form>
+        {%elif not is_course_started%}
+        <h1 class="courseStep">Базовый курс</h1>
+        <p class="courseTheory">Разделы курса: Арифметика,Линейные уравнения,Квадратный трехчлен,Системы,Замена переменной,Производная,Неравенства</p>
+        <form action="" method="post">{% csrf_token %}
+                <input class="navigation_button" type="submit" value="Начать Курс" name="start_course">
+            </form>
+        {%endif%}
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+function check_answer(){
+	var problems = document.getElementsByClassName("problem");
+    let solved_problems = []
+    let unsolved_problems = []
+	var i = 0;
+	{% for problem in problems %}
+	var answer = problems[i].getElementsByClassName("input-answer")[0];
+	var show_solution_btn = problems[i].getElementsByClassName("show_solution")[0];
+	if (answer.value == '{{problem.2}}'){
+        solved_problems.push(i);
+	}
+    else{
+        unsolved_problems.push(i);
+    }
+	i+=1;
+	{% endfor %}
+    $.ajax({
+            type: 'POST',
+            url:'',
+            data: {
+                solved_problems: solved_problems,
+                unsolved_problems: unsolved_problems,
+                csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+            }
+        });
+}
+const form = document.getElementById('check_answer');
+form.addEventListener('submit', check_answer);
+
+{% endblock %}

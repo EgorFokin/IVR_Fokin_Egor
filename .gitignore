@@ -1,3 +1,6 @@
 venv/
 .idea/
-.PROJECT/config.txt
+PROJECT/mysite/AlgGen/__pycache__/
+PROJECT/mysite/AlgGen/migrations/__pycache__/
+PROJECT/mysite/mysite/__pycache__/
+/PROJECT/config.txt

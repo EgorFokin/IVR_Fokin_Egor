@@ -13,6 +13,7 @@
           loader: {load: ['input/asciimath', 'output/chtml']}
         }
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script type="text/javascript" id="MathJax-script" async
             src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/startup.js">
@@ -27,7 +28,7 @@
     <nav class="site-navigation">
         <ul class="nav">
             <li class=border-right><a href="{%url 'index'%}">Практика</a></li>
-            <li><a href="#">Курсы</a></li>
+            <li><a href="{%url 'courses'%}">Курсы</a></li>
         </ul>
     </nav>
     {% if user.is_authenticated %}
